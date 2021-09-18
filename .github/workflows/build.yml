@@ -19,6 +19,7 @@ jobs:
         name: Login to DockerHub
         uses: docker/login-action@v1 
         with:
+          registry: registry.hub.docker.com
           username: ${{ github.actor }}
           password: ${{ secrets.DOCKERHUB_PASS }}
   #    -
@@ -36,6 +37,6 @@ jobs:
           platforms: linux/arm/v7
           push: true
           tags: |
-            ${{ github.actor }}/${{ github.repository }}:latest
+            registry.hub.docker.com/${{ github.actor }}/${{ github.repository }}:latest
 
 #            ghcr.io/${{ github.actor }}/${{ github.repository }}:latest
