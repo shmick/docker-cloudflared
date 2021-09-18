@@ -37,6 +37,6 @@ jobs:
           platforms: linux/arm/v7
           push: true
           tags: |
-            registry.hub.docker.com/${{ github.actor }}/${{ github.repository }}:latest
+            shmick/cloudflared-arm:latest
 
 #            ghcr.io/${{ github.actor }}/${{ github.repository }}:latest
