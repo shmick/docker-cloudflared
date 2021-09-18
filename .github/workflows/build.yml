@@ -46,4 +46,19 @@ jobs:
           platforms: linux/arm/v7
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          
+      - name: Log in to the Container registry
+        uses: docker/login-action@v1
+        with:
+          registry: registry.hub.docker.com
+          username: ${{ github.actor }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
 
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          platforms: linux/arm/v7
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
