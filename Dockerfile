@@ -5,7 +5,9 @@ ENV VERSION "2021.9.0"
 ENV FILE "cloudflared-linux-arm"
 ENV URL "https://github.com/cloudflare/cloudflared/releases/download/${VERSION}/${FILE}"
 
-RUN apk add --no-cache curl && curl -L $URL -o cloudflared
+RUN apk update \
+  && apk add curl \
+  && curl -L $URL -o cloudflared
 
 FROM alpine:3.14
 
