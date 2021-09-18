@@ -36,6 +36,6 @@ jobs:
           platforms: linux/arm/v7
           push: true
           tags: |
-            ${{ github.repository_owner }}/${{ github.repository }}:latest
-            ghcr.io/${{ github.repository_owner }}/${{ github.repository }}:latest
+            ${{ github.repository }}:latest
+            ghcr.io/${{ github.repository }}:latest
 
