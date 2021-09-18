@@ -19,8 +19,7 @@ jobs:
         name: Login to DockerHub
         uses: docker/login-action@v1 
         with:
-          registry: registry.hub.docker.com
-          username: ${{ github.actor }}
+          username: shmick
           password: ${{ secrets.DOCKERHUB_PASS }}
   #    -
   #      name: Login to GitHub Container Registry
