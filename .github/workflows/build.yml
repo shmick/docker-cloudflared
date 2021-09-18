@@ -37,4 +37,5 @@ jobs:
           push: true
           tags: |
             ${{ github.actor }}/${{ github.repository }}:latest
-            ghcr.io/${{ github.actor }}/${{ github.repository }}:latest
+
+#            ghcr.io/${{ github.actor }}/${{ github.repository }}:latest
