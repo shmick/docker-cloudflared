@@ -14,7 +14,7 @@ ENV BASEURL "https://github.com/cloudflare/cloudflared/releases/download/${VERSI
 RUN apk update \
   && apk add curl \
   && if [ "$TARGETARCH" = "arm" ] ; then export FILE=cloudflared-linux-arm ; fi \
-  && if [ "$TARGETARCH" = "amd64" ] ; then export FILE=cloudflared-linux-amd64 ; fi
+  && if [ "$TARGETARCH" = "amd64" ] ; then export FILE=cloudflared-linux-amd64 ; fi \
   && curl -L ${BASEURL}/${FILE} -o cloudflared
 
 FROM alpine:3.14
