@@ -9,11 +9,13 @@ RUN if [ "$TARGETARCH" = "amd64" ] ; then export FILE=cloudflared-linux-amd64 ; 
 
 ARG FILE
 
-ENV URL "https://github.com/cloudflare/cloudflared/releases/download/${VERSION}/${FILE}"
+ENV BASEURL "https://github.com/cloudflare/cloudflared/releases/download/${VERSION}"
 
 RUN apk update \
   && apk add curl \
-  && curl -L $URL -o cloudflared
+  && if [ "$TARGETARCH" = "arm" ] ; then export FILE=cloudflared-linux-arm ; fi \
+  && if [ "$TARGETARCH" = "amd64" ] ; then export FILE=cloudflared-linux-amd64 ; fi
+  && curl -L ${BASEURL}/${FILE} -o cloudflared
 
 FROM alpine:3.14
 
