@@ -3,7 +3,7 @@ name: Create and publish a Docker image
 on:
   push:
     branches:
-      - 'multiarch'
+      - 'main'
 
 jobs:
   docker:
@@ -34,7 +34,7 @@ jobs:
         with:
           context: .
           platforms: linux/arm/v7,linux/amd64
-          push: false
+          push: true
           tags: |
             ${{ github.repository }}:latest
             ghcr.io/${{ github.repository }}:latest
