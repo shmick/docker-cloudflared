@@ -4,9 +4,10 @@ ENV VERSION "2021.9.1"
 
 ARG TARGETARCH
 
-ENV FILE
-RUN if [ "$TARGETARCH" = "arm" ] ; then FILE=cloudflared-linux-arm ; fi
-RUN if [ "$TARGETARCH" = "amd64" ] ; then FILE=cloudflared-linux-amd64 ; fi
+RUN if [ "$TARGETARCH" = "arm" ] ; then export FILE=cloudflared-linux-arm ; fi
+RUN if [ "$TARGETARCH" = "amd64" ] ; then export FILE=cloudflared-linux-amd64 ; fi
+
+ARG FILE
 
 ENV URL "https://github.com/cloudflare/cloudflared/releases/download/${VERSION}/${FILE}"
 
