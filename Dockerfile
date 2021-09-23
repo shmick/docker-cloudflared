@@ -15,7 +15,7 @@ RUN apk update \
   && apk add curl \
   && if [ "$TARGETARCH" = "arm" ] ; then export FILE=cloudflared-linux-arm ; fi \
   && if [ "$TARGETARCH" = "amd64" ] ; then export FILE=cloudflared-linux-amd64 ; fi \
-  && curl -L ${BASEURL}/${FILE} -o cloudflared
+  && curl -L ${BASEURL}/${FILE} -o cloudflared && file cloudflared
 
 FROM alpine:3.14
 
