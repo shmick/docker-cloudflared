@@ -1,0 +1,14 @@
+version: "3.7"
+services:
+  cloudflare-tunnel:
+    container_name: cloudflare-tunnel
+    image: ghcr.io/shmick/cloudflared-arm
+    user: 1000:1000
+    network_mode: host
+    environment: 
+      - TUNNEL_ID=mytunnel
+    command: tunnel run
+    volumes:
+      - './config:/etc/cloudflared' # bind mount with cert.pem in it
+    restart: unless-stopped
+    

@@ -1,0 +1,6 @@
+tunnel: xxxx
+credentials-file: /etc/cloudflared/mytunnel.json
+
+ingress:
+  - hostname: mytunnel.example.com
+    service: http://localhost:8080
