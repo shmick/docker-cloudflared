@@ -2,7 +2,7 @@
 
 ## Directory structure
 ```
-cloudflare-docker
+cloudflare-tunnel
 |
 │   docker-compose.yaml
 |
