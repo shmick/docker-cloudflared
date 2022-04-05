@@ -1,14 +1,15 @@
-version: "3.7"
+version: "3.8"
+
 services:
   cloudflare-tunnel:
     container_name: cloudflare-tunnel
-    image: ghcr.io/shmick/cloudflared-arm
+    image: ghcr.io/shmick/docker-cloudflared
     user: 1000:1000
     network_mode: host
     environment: 
       - TUNNEL_ID=mytunnel
     command: tunnel run
     volumes:
-      - './config:/etc/cloudflared' # bind mount with cert.pem in it
+      - ./config:/etc/cloudflared
     restart: unless-stopped
     
