@@ -1,4 +1,4 @@
-FROM alpine:3.14 AS builder
+FROM alpine:3.15 AS builder
 
 ENV VERSION "2022.4.0"
 
@@ -10,7 +10,7 @@ RUN apk update \
   && apk add curl \
   && curl -L ${URL} -o cloudflared
   
-FROM alpine:3.14
+FROM alpine:3.15
 
 WORKDIR /usr/local/bin
 
