@@ -1,10 +1,10 @@
 FROM alpine:3.15 AS builder
 
-ENV VERSION "2022.11.1"
+ARG VERSION="2022.11.1"
 
 ARG TARGETARCH
 
-ENV URL "https://github.com/cloudflare/cloudflared/releases/download/${VERSION}/cloudflared-linux-${TARGETARCH}"
+ARG URL="https://github.com/cloudflare/cloudflared/releases/download/${VERSION}/cloudflared-linux-${TARGETARCH}"
 
 RUN apk update \
   && apk add curl \
