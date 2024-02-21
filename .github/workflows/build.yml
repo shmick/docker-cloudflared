@@ -35,7 +35,7 @@ jobs:
         run: docker buildx use default && docker buildx inspect default --bootstrap
 
       - name: Build and push
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v5
         with:
           context: .
           platforms: ${{ matrix.platform }}
