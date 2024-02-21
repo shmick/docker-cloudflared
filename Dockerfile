@@ -1,5 +1,6 @@
 FROM alpine:3.15 AS builder
 
+# 2024.2.1
 ARG VERSION="2024.2.1"
 
 ARG TARGETARCH
