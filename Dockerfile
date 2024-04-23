@@ -1,6 +1,6 @@
-FROM alpine:3.15 AS builder
+FROM alpine:3.19 AS builder
 
-ARG VERSION="2024.4.0"
+ARG VERSION="2024.4.1"
 
 ARG TARGETARCH
 
