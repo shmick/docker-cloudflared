@@ -8,7 +8,7 @@ ARG URL="https://github.com/cloudflare/cloudflared/releases/download/${VERSION}/
 
 RUN apk update && apk add curl && curl -L ${URL} -o cloudflared
   
-FROM alpine:3.15
+FROM alpine:3.20
 
 WORKDIR /usr/local/bin
 
