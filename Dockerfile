@@ -1,4 +1,4 @@
-FROM alpine:3.20 AS builder
+FROM public.ecr.aws/docker/library/alpine:3.21 AS builder
 
 ARG VERSION="2025.2.0"
 
@@ -8,7 +8,7 @@ ARG URL="https://github.com/cloudflare/cloudflared/releases/download/${VERSION}/
 
 RUN apk update && apk add curl && curl -L ${URL} -o cloudflared
   
-FROM alpine:3.20
+FROM public.ecr.aws/docker/library/alpine:3.21
 
 WORKDIR /usr/local/bin
 
