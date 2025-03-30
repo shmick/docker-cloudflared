@@ -1,6 +1,7 @@
 # Cloudflare Tunnel client
 A lightweight container image of the [Cloudflare Tunnel client](https://github.com/cloudflare/cloudflared) with support for armv7, arm64 and amd64
 
+![Build Status](https://github.com/shmick/docker-cloudflared/actions/workflows/build.yml/badge.svg)
 ## Setup with docker compose
 
 ### docker-compose.yml
