@@ -1,26 +1,22 @@
-name: Delete Old Container Versions
+name: GHCR Cleanup
 
 on:
   schedule:
-    # Runs at 00:00 every Sunday
-    - cron: '0 0 * * 0'
+    - cron: '0 0 * * 0' # Every Sunday at midnight
   workflow_dispatch:
-
 jobs:
-  delete-older-than-year:
+  cleanup:
     runs-on: ubuntu-latest
     permissions:
       packages: write
 
     steps:
       - name: Delete versions older than 1 year
-        uses: data-intuitive/ghcr-cleanup-action@v1
+        uses: dataaxiom/ghcr-cleanup-action@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          # The package name (found in your URL)
           package: docker-cloudflared
-          # Delete versions older than 365 days
-          older-than: 365 days
-          # Optional: Keep a specific number of latest versions regardless of age
-          keep-n-latest: 16
-          dry-run: true
+          older-than: 1 year
+          keep-n-tagged: 16      # Safety: always keep the 5 newest tagged versions
+          delete-untagged: false # Clean up those "unknown/unknown" entries
+          dry-run: true  
