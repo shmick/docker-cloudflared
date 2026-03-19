@@ -17,6 +17,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           package: docker-cloudflared
           older-than: 1 year
-          keep-n-tagged: 16      # Safety: always keep the 5 newest tagged versions
+          keep-n-tagged: 3     # Safety: always keep the 5 newest tagged versions
           delete-untagged: false # Clean up those "unknown/unknown" entries
           dry-run: true  
