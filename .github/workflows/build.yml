@@ -1,19 +1,77 @@
 name: Create and publish a Docker image
 
 on:
-  push:
-    branches:
-      - 'main'
-    paths:
-      - 'Dockerfile'
+  schedule:
+    # Runs every day at midnight UTC
+    - cron: '0 0 * * *'
+  workflow_dispatch: # Allows manual triggering from the Actions tab
 
 jobs:
-  docker:
+  check-version:
     runs-on: ubuntu-latest
+    outputs:
+      new_version: ${{ steps.check-new.outputs.NEW_VERSION }}
+      current_version: ${{ steps.get-current.outputs.CURRENT_VERSION }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        
+
+      - name: Get current version from Dockerfile
+        id: get-current
+        run: |
+          CURRENT_VER=$(grep "ARG VERSION" Dockerfile | awk -F\" '{print $2}')
+          echo "CURRENT_VERSION=$CURRENT_VER"
+          echo "CURRENT_VERSION=$CURRENT_VER" >> $GITHUB_OUTPUT
+
+      - name: Fetch latest cloudflared release
+        id: fetch-latest
+        run: |
+          LATEST_VER=$(curl -s https://api.github.com/repos/cloudflare/cloudflared/releases/latest | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+          echo "LATEST_VERSION=$LATEST_VER"
+          echo "LATEST_VERSION=$LATEST_VER" >> $GITHUB_OUTPUT
+
+      - name: Compare versions
+        id: check-new
+        shell: bash
+        run: |
+          CURRENT="${{ steps.get-current.outputs.CURRENT_VERSION }}"
+          LATEST="${{ steps.fetch-latest.outputs.LATEST_VERSION }}"
+          
+          echo "Current: $CURRENT"
+          echo "Latest:  $LATEST"
+          
+          if [ "$CURRENT" != "$LATEST" ]; then
+            echo "New version found: $LATEST"
+            echo "NEW_VERSION=$LATEST" >> $GITHUB_OUTPUT
+            echo "update_needed=true" >> $GITHUB_OUTPUT
+          else
+            echo "Already up to date."
+            echo "update_needed=false" >> $GITHUB_OUTPUT
+          fi
+
+  docker:
+    needs: check-version
+    # Run if triggered manually OR if a new version was found by the cron job
+    if: github.event_name == 'workflow_dispatch' || needs.check-version.outputs.new_version != ''
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Needed to commit the updated Dockerfile back to the repo
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Update Dockerfile version
+        if: needs.check-version.outputs.new_version != ''
+        run: |
+          NEW_VER="${{ needs.check-version.outputs.new_version }}"
+          sed -i 's/ARG VERSION=".*"/ARG VERSION="'${NEW_VER}'"/' Dockerfile
+          
+          # Commit and push the updated Dockerfile back to main
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git commit -am "chore: update cloudflared to ${NEW_VER}"
+          git push
+
       - name: Set APPVER ENV
         run: echo "APPVER=$(grep "ARG VERSION" Dockerfile | awk -F\" '{print $2}')" >> $GITHUB_ENV
 
