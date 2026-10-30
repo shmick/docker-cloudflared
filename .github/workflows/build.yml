@@ -3,7 +3,7 @@ name: Create and publish a Docker image
 on:
   schedule:
     # Runs every day at midnight UTC
-    - cron: '0 0 * * *'
+    - cron: '0 22 * * *'
   workflow_dispatch: # Allows manual triggering from the Actions tab
 
 permissions:
